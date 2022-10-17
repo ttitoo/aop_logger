@@ -9,12 +9,12 @@ module MiraclePlus
 
       def initialize
         @logger = begin
-          log = Ougai::Logger.new("#{Rails.root}/log/#{Socket.gethostname}.log")
-          log.default_message = '<no content>'
-          log.sev_threshold = Ougai::Logger::TRACE
-          log.level = Ougai::Logger::TRACE
-          log.formatter = MiraclePlus::Logger::Formatter.new
-          log
+          std = Ougai::Logger.new($stdout)
+          std.default_message = '<no content>'
+          std.sev_threshold = Ougai::Logger::TRACE
+          std.level = Ougai::Logger::TRACE
+          std.formatter = MiraclePlus::Logger::Formatter.new
+          std
         end
       end
 
