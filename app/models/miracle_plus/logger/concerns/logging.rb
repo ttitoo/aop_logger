@@ -129,7 +129,7 @@ module MiraclePlus
           end
 
           def logging_errors
-            return unless is_a?(ActiveRecord::Base) && errors.present?
+            return unless is_a?(ActiveRecord::Base) && errors.present? && RequestStore.store.key?(:errors)
 
             RequestStore.store[:errors].push(
               as_json(except: %i[deleted_at created_at updated_at]).compact.merge(errors: errors.as_json)
