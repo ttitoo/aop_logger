@@ -6,6 +6,7 @@ require 'redis'
 require 'request_store'
 # require 'enterprise_script_service'
 require_relative './context_middleware'
+require_relative './sidekiq_logger_middleware'
 require_relative './wrapper'
 
 module MiraclePlus
@@ -40,6 +41,12 @@ module MiraclePlus
         end
 
         unless rake_env
+          Sidekiq.configure_server do |config|
+            config.server_middleware do |chain|
+              chain.add(MiraclePlus::SidekiqLoggerMiddleware)
+            end
+          end
+
           Object.include(MiraclePlus::Logger::Loggable)
           # [ActiveRecord::Base, ActionController::API, ActionController::Base].each do |klass|
           #   klass.include(MiraclePlus::Logger::Loggable)

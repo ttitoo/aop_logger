@@ -7,30 +7,6 @@ module MiraclePlus
         extend ActiveSupport::Concern
 
         included do
-          # def self.tracking_alias_method_prefix
-          #   :__origin_
-          # end
-          #
-          # def self.tracking_methods_for(klass)
-          #   []
-          # end
-          # private_class_method :tracking_methods_for
-          #
-          # def self.transform_to_readable_tracking_result(object)
-          #   if object.is_a?(Array)
-          #     object.map { |obj| get_identifier(obj) }
-          #   elsif object.is_a?(Hash)
-          #     Hash[object.keys.map { |key| [key, transform_to_readable_tracking_result(object[key])] }]
-          #   elsif object.is_a?(ActiveRecord::Base)
-          #     klass = object.class
-          #     "#{klass}##{object.send(klass.primary_key)}"
-          #   else
-          #     transform_to_readable_tracking_result(object)
-          #   end
-          #   object
-          # end
-          # private_class_method :transform_to_readable_tracking_result
-
           klass.define_singleton_method(:tracking_alias_method_prefix) { :__origin_ }
           klass.define_singleton_method(:tracking_methods_for) { [] }
           klass.define_singleton_method(:transform_to_readable_tracking_result) do |object|
@@ -42,7 +18,6 @@ module MiraclePlus
               klass = object.class
               "#{klass}##{object.send(klass.primary_key)}"
             else
-              # klass.transform_to_readable_tracking_result(object)
               object.as_json
             end
             object
