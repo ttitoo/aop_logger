@@ -3,7 +3,7 @@
 module MiraclePlus
   module Logger
     class SidekiqLoggerMiddleware
-      include Concerns::Loggable
+      include Loggable
       include Concerns::ExceptionParser
 
       # @param [Object] worker the worker instance
