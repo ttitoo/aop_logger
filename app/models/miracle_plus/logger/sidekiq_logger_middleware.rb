@@ -13,11 +13,19 @@ module MiraclePlus
       # @yield the next middleware in the chain or worker `perform` method
       # @return [Void]
       def call(worker, job, queue)
+        start_ts = DateTime.current.to_f
         yield
-        info('Job done', worker: worker.class.to_s, payload: job, queue: queue)
+        stop_ts = DateTime.current.to_f
+        info(
+          'Job success',
+          worker: worker.class.to_s,
+          payload: job,
+          queue: queue,
+          duration: ((stop_ts - start_ts) * 1000).round
+        )
       rescue StandardError => e
         error(
-          'Error occured during sidekiq job',
+          'Job failure',
           {
             worker: worker.class.to_s,
             payload: job,
