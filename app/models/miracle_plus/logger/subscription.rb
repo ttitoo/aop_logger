@@ -29,7 +29,7 @@ module MiraclePlus
             path: data[:path].to_s.split('?').first,
             params: data[:params].as_json(except: %i[authenticity_token controller action format]),
             view: data[:view_runtime]&.round || 0, # will be nil if 30X redirect
-            db: data[:db_runtime]&.round
+            db: data[:db_runtime]&.round || 0 # will be nil if no database operations
           )
       end
     end
