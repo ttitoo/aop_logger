@@ -9,7 +9,7 @@ module MiraclePlus
 
       def initialize
         @logger = begin
-          std = Ougai::Logger.new($stdout)
+          std = Ougai::Logger.new(logger_dst)
           std.default_message = '<no content>'
           std.sev_threshold = Ougai::Logger::TRACE
           std.level = Ougai::Logger::TRACE
@@ -22,6 +22,12 @@ module MiraclePlus
         child = @logger.child
         child.with_fields = with_fields.compact
         child
+      end
+
+      private
+
+      def logger_dst
+        Rails.env.production? ? $stdout : "#{Rails.root}/log/#{ENV.fetch('RAILS_ENV', 'development')}.log"
       end
     end
   end
