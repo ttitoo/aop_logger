@@ -10,13 +10,15 @@ module MiraclePlus
       end
 
       def call(env)
-        current_user = current_user(env)
+        user_id = current_user_id(env)
         entries = Entry.list(env['REMOTE_ADDR'])
-        RequestStore.store[:need_tracking] = entries.present?
-        RequestStore.store[:entries] = entries
-        ids = uniq_ids.prepend(current_user.try(:id) || 0)
-        RequestStore.store[:logging] =
-          MiraclePlus::Logger::Instance.pop(track_id: hashids.encode(*ids), current_user_id: current_user.try(:id))
+        ids = uniq_ids.prepend(user_id || 0)
+        RequestStore.store = {
+          need_tracking: entries.present?,
+          entries: entries,
+          logging: MiraclePlus::Logger::Instance.pop(track_id: hashids.encode(*ids), current_user_id: user_id),
+          errors: []
+        }
 
         @app.call(env)
       end
@@ -29,6 +31,10 @@ module MiraclePlus
 
       def current_user(env)
         env['warden']&.user
+      end
+
+      def current_user_id(env)
+        current_user(env).try(:id)
       end
 
       def hashids

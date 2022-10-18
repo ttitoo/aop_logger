@@ -16,8 +16,9 @@ module MiraclePlus
           RequestStore.store[:tracing] = json
         end
         ActiveSupport::Notifications.subscribe('process_action.action_controller') do |event|
-          RequestStore.store[:tracing].merge!(allocations: event.allocations, duration: event.duration.round)
-          RequestStore.store[:logging].info('Action statistics', RequestStore.store[:tracing].compact)
+          res = { allocations: event.allocations, duration: event.duration.round }
+          res[:errors] = RequestStore.store[:errors] if RequestStore.store[:errors].present?
+          RequestStore.store[:logging].info('Action statistics', RequestStore.store[:tracing].merge(res).compact)
         end
       end
     end
