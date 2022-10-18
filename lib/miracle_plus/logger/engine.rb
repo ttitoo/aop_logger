@@ -41,7 +41,7 @@ module MiraclePlus
 
         unless rake_env
           Sidekiq.configure_server do |config|
-            config.logger = Logger.new('/dev/null')
+            config.logger = ::Logger.new('/dev/null')
             config.server_middleware do |chain|
               chain.add(MiraclePlus::Logger::SidekiqLoggerMiddleware)
             end
