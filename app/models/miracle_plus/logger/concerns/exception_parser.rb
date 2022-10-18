@@ -11,7 +11,7 @@ module MiraclePlus
               exception: exception.class.to_s,
               message: exception.message,
               backtrace: exception.backtrace.map do |e|
-                next if %w[/gems/ruby /mp_logger/lib/miracle_plus/logger/context_middleware].any? { |s| e.index(s) }
+                next if %w[/gems/ /mp_logger/].any? { |s| e.index(s) }
 
                 e.remove(prefix)
               end.compact
