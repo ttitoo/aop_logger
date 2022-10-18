@@ -18,7 +18,7 @@ module MiraclePlus
             }
           }
           append_status &&
-            res[:status] = ActionDispatch::ExceptionWrapper.status_code_for_exception(exception.class.first)
+            res[:status] = ActionDispatch::ExceptionWrapper.status_code_for_exception(exception.class)
 
           res
         end
