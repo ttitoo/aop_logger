@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rails', '6.0.3.6'
   spec.add_dependency 'i18n'
   spec.add_dependency 'hashids'
-  spec.add_dependency 'redis'
+  spec.add_dependency 'redis', '~> 5.0.0', '>= 5.0.5'
   spec.add_dependency 'hiredis'
   spec.add_dependency 'ougai'
   spec.add_dependency 'request_store'
