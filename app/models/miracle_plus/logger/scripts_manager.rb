@@ -21,6 +21,18 @@ module MiraclePlus
         Redis.hset('scripts', *scripts)
       end
 
+      def self.subscribe_expiration
+        Thread.new do
+          Redis.psubscribe("__keyevent@#{MiraclePlus::Logger::RedisDatabaseIndex}__:expired") do |on|
+            on.pmessage do |_pattern, _channel, key|
+              identifier, ip, id = key.split(':')
+              identifier == 'expire' &&
+                exec(:destroy, argv: [ip, id])
+            end
+          end
+        end
+      end
+
       def self.restore_script(action)
         Redis.script('load', instance.send("script_#{action}"))
       end
@@ -33,7 +45,8 @@ module MiraclePlus
 
       def self.exec(action, args)
         ensure_action_legal(action)
-        ensure_statements_valid(JSON.parse(args[:argv].last)['statements'])
+        action.to_sym == :create &&
+          ensure_statements_valid(JSON.parse(args[:argv].last)['statements'])
 
         sha = Redis.hget('scripts', action)
         restore_script(action) unless sha.present? && Redis.script('exists', sha)
@@ -96,7 +109,7 @@ module MiraclePlus
             end
           end
           redis.call('HSET', entry_key, 'payload', ARGV[3])
-          redis.call('EXPIRE', entry_key, 600000)
+          redis.call('SET', 'expire:'..ARGV[1]..':'..ARGV[2], 1, 'EX', 3600 * 7)
 
           if (redis.call('LPOS', "#{prefix}:#{entries_key_identifier}", ARGV[2]) or '') == ''
           then
@@ -115,6 +128,7 @@ module MiraclePlus
             if ip == ARGV[1]
             then
               local ip_entries_key_prefix = "#{prefix}:#{ip_entry_key_identifier}:"
+              redis.call('LREM', "#{prefix}:#{entries_key_identifier}", 0, ARGV[2])
               redis.call('SREM', ip_entries_key_prefix..ip, ARGV[2])
               redis.call('DEL', entry_key)
             end

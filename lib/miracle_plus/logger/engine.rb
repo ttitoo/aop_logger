@@ -20,12 +20,15 @@ module MiraclePlus
 
         unless rake_env
           MiraclePlus::Logger::Redis =  if Object.const_defined?('MiraclePlus::RedisManager')
-                                          MiraclePlus::RedisManager.instance.get(:cache)
+                                          client = MiraclePlus::RedisManager.instance.get(:cache)
+                                          MiraclePlus::Logger::RedisDatabaseIndex = client.database_index
+                                          client
                                         else
                                           host = ENV['REDIS_HOST']
                                           port = ENV['REDIS_PORT']
                                           password = ENV['REDIS_PASSWORD']
-                                          db_index = ENV['REDIS_LOGGING_DB_INDEX'] || 12
+                                          MiraclePlus::Logger::RedisDatabaseIndex = 15
+                                          db_index = ENV['REDIS_LOGGING_DB_INDEX'] || MiraclePlus::Logger::Redis::Database
                                           url = "redis://#{password.present? ? ":#{password}@" : ''}#{host}:#{port}/#{db_index}"
                                           Redis.new(driver: :hiredis, url: url)
                                         end
@@ -77,6 +80,7 @@ module MiraclePlus
           end
           MiraclePlus::Logger::Redis.sadd('logging:targets', targets)
           MiraclePlus::Logger::ScriptsManager.init_scripts
+          MiraclePlus::Logger::ScriptsManager.subscribe_expiration
         end
       end
     end
