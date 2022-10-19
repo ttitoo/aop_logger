@@ -3,11 +3,10 @@
 module MiraclePlus
   module Logger
     class Entry
+      extend Entries::List
+
       include Loggable
-      include Entries::List
       include Entries::Crud
-      include Entries::Expire
-      # include Entries::Script
 
       attr_reader :ip, :id
 
