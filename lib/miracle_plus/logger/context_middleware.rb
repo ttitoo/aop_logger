@@ -11,7 +11,7 @@ module MiraclePlus
 
       def call(env)
         user_id = current_user_id(env)
-        entries = Entry.list(env['REMOTE_ADDR'])
+        entries = Entry.list(ip: env['REMOTE_ADDR'])
         ids = uniq_ids.prepend(user_id || 0)
         RequestStore.store = {
           need_tracking: entries.present?,

@@ -7,8 +7,8 @@ module MiraclePlus
         extend ActiveSupport::Concern
 
         included do
-          def self.list(ip = nil)
-            ids = ip.nil? ? Redis.lrange(entries_key, 0, -1) : Redis.smembers(ip_entries_key(ip))
+          def self.list(page: 1, per: 15, ip: nil)
+            ids = ip.nil? ? Redis.lrange(entries_key, (page - 1) * per, page * per) : Redis.smembers(ip_entries_key(ip))
             fetch_detail(ids)
           end
 

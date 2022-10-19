@@ -6,7 +6,7 @@ module MiraclePlus
       def index
         page = (params['page'] || '1').to_i
         per = (params['per'] || '15').to_i
-        render json: { entries: Entry.list(page, per) }
+        render json: { entries: Entry.list(page: page, per: per) }
       end
 
       def show
