@@ -10,7 +10,7 @@ RSpec.describe MiraclePlus::Logger::ScriptsManager, type: :model do
   subject(:manager) { described_class.instance }
   let(:redis) { MiraclePlus::Logger::Redis }
 
-  describe '#init_scripts' do
+  describe '.init_scripts' do
     subject! do
       manager.init_scripts
     end
