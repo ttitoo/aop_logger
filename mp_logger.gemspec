@@ -28,4 +28,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'request_store'
   # spec.add_dependency 'enterprise_script_service', '~> 0.2.1'
   spec.add_dependency 'msgpack'
+  spec.add_dependency 'parser'
 end

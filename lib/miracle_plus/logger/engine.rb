@@ -4,7 +4,7 @@ require 'hashids'
 require 'ougai'
 require 'redis'
 require 'request_store'
-# require 'enterprise_script_service'
+require 'parser/current'
 require_relative './context_middleware'
 require_relative './wrapper'
 
@@ -13,7 +13,7 @@ module MiraclePlus
     class Engine < ::Rails::Engine
       isolate_namespace MiraclePlus::Logger
 
-      rake_env = defined?(Rake) && Rake.application.top_level_tasks.present?
+      rake_env = defined?(Rake) && Rake.try(:application).try(:top_level_tasks).present?
       config.app_middleware.insert_after(Warden::Manager, MiraclePlus::Logger::ContextMiddleware) unless Rails.env.test?
       initializer :initialize_logging_redis do |_app, args|
         MiraclePlus::Logger::Instance = MiraclePlus::Logger::Wrapper.new
@@ -43,12 +43,13 @@ module MiraclePlus
         end
 
         unless rake_env
-          Sidekiq.configure_server do |config|
-            config.logger = ::Logger.new('/dev/null')
-            config.server_middleware do |chain|
-              chain.add(MiraclePlus::Logger::SidekiqLoggerMiddleware)
+          defined?(Sidekiq) &&
+            Sidekiq.configure_server do |config|
+              config.logger = ::Logger.new('/dev/null')
+              config.server_middleware do |chain|
+                chain.add(MiraclePlus::Logger::SidekiqLoggerMiddleware)
+              end
             end
-          end
 
           Object.include(MiraclePlus::Logger::Loggable)
           # [ActiveRecord::Base, ActionController::API, ActionController::Base].each do |klass|

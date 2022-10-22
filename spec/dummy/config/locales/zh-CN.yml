@@ -1,5 +1,5 @@
 ---
-en:
+zh-CN:
   mp_logger:
     errors:
       statements:
@@ -7,3 +7,4 @@ en:
           kernel_method: Kernel method
           shell_command: Shell command
           blacklisted: Blacklisted
+

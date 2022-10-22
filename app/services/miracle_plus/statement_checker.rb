@@ -22,13 +22,8 @@ module MiraclePlus
       raise(ArgumentError, "Invalid or invisible method: #{class_name}##{method_name}")
     end
 
-    private
-
-    def legal_variable_name?(name)
-      Object.new.instance_variable_set("@#{name}".to_sym, nil)
-      true
-    rescue NameError
-      false
+    def ensure_code_valid(code)
+      AstValidator.new(code).perform
     end
   end
 end
