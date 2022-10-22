@@ -122,6 +122,7 @@ module MiraclePlus
             RUBY
             output = nil
             ActiveRecord::Base.transaction do
+              $SAFE = 1
               output = eval(script)
               raise ActiveRecord::Rollback
             end
