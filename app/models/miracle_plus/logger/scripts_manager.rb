@@ -21,6 +21,38 @@ module MiraclePlus
         Redis.hset('scripts', *scripts)
       end
 
+      def self.redis_assets_key
+        'logging:assets'
+      end
+
+      def self.assets
+        Redis.lrange(redis_assets_key, 0, -1)
+      end
+
+      def self.locate_assets
+        key = redis_assets_key
+        Redis.del(key)
+        folder = File.join(MiraclePlus::Logger::Engine.root, 'dist')
+        locate = lambda do
+          Dir.glob("#{folder}/logging-*").each do |file|
+            filename = File.basename(file)
+            Redis.lpush(key, filename)
+            dst = File.join(Rails.root, 'public', 'assets', filename)
+            next if File.exist?(dst)
+
+            FileUtils.copy_file(file, dst, true)
+          end
+        end
+        if Rails.env.development? && !Dir.exist?(folder)
+          fork do
+            system("cd #{MiraclePlus::Logger::Engine.root};yarn install > /dev/null 2>&1; yarn run build > /dev/null 2>&1")
+            locate.call
+          end
+        else
+          locate.call
+        end
+      end
+
       def self.subscribe_expiration
         Thread.new do
           SubRedis.psubscribe("__keyevent@#{MiraclePlus::Logger::RedisDatabaseIndex}__:expired") do |on|

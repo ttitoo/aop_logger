@@ -9,7 +9,7 @@ namespace :miracle_plus do
     task :copy_assets do
       system("cd #{MiraclePlus::Logger::Engine.root};yarn install;yarn run build")
       dir = File.join(MiraclePlus::Logger::Engine.root, 'dist')
-      Dir.glob("#{dir}/*").map do |asset|
+      Dir.glob("#{dir}/*").each do |asset|
         dst = File.join(Rails.root, 'public', 'assets', File.basename(asset))
         FileUtils.copy_file(asset, dst, true)
       end

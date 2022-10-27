@@ -2,17 +2,18 @@ const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const nodeModulesPath = path.resolve(__dirname, 'node_modules');
+const assetPrefix = 'logging-';
 
 const config = {
   mode: 'production',
   devtool: 'eval',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name]-[contenthash].js',
+    filename: assetPrefix + '[contenthash].js',
     publicPath: '/',
   },
   entry: {
-    logging: './component/Logging.tsx'
+    logging: './component/index.tsx'
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -22,7 +23,7 @@ const config = {
     }),
     new webpack.PrefetchPlugin('react'),
     new webpack.PrefetchPlugin('react-dom/server.browser.js'),
-    new MiniCssExtractPlugin({ filename: 'logging-[contenthash].css' }),
+    new MiniCssExtractPlugin({ filename: assetPrefix + '[contenthash].css' }),
   ],
   module: {
     unknownContextCritical: false,

@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-// import './index.less';
+import Logging from './Logging';
 
 ReactDOM.render(
-  <App />,
-  document.getElementById('root'),
+  <Logging />,
+  document.getElementById('logging-context'),
 );
 

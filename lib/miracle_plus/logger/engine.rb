@@ -82,6 +82,7 @@ module MiraclePlus
             enable
           end
           MiraclePlus::Logger::Redis.sadd('logging:targets', targets)
+          MiraclePlus::Logger::ScriptsManager.locate_assets
           MiraclePlus::Logger::ScriptsManager.init_scripts
           MiraclePlus::Logger::ScriptsManager.subscribe_expiration
         end
