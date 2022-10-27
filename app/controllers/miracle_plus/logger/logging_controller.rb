@@ -3,10 +3,9 @@
 module MiraclePlus
   module Logger
     class LoggingController < ActionController::Base
-      protect_from_forgery except: :comp
+      protect_from_forgery except: :index
 
-      def comp
-      end
+      def index; end
 
       def targets
         MiraclePlus::Logger::Redis.get('logging')

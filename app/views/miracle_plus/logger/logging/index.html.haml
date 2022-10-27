@@ -1,0 +1,8 @@
+#logging-context
+%link{ rel: :stylesheet, href: "https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" }
+
+- MiraclePlus::Logger::ScriptsManager.assets.each do |asset|
+  - if asset.end_with?('js')
+    %script{ src: "/assets/#{asset}" }
+  - else
+    %link{ rel: :stylesheet, href: "/assets/#{asset}" }
