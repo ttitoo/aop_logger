@@ -19,19 +19,21 @@ module MiraclePlus
         MiraclePlus::Logger::Instance = MiraclePlus::Logger::Wrapper.new
 
         unless rake_env
-          MiraclePlus::Logger::Redis =  if Object.const_defined?('MiraclePlus::RedisManager')
-                                          client = MiraclePlus::RedisManager.instance.get(:cache)
-                                          MiraclePlus::Logger::RedisDatabaseIndex = client.database_index
-                                          client
-                                        else
-                                          host = ENV['REDIS_HOST']
-                                          port = ENV['REDIS_PORT']
-                                          password = ENV['REDIS_PASSWORD']
-                                          MiraclePlus::Logger::RedisDatabaseIndex = 15
-                                          db_index = ENV['REDIS_LOGGING_DB_INDEX'] || MiraclePlus::Logger::Redis::Database
-                                          url = "redis://#{password.present? ? ":#{password}@" : ''}#{host}:#{port}/#{db_index}"
-                                          Redis.new(driver: :hiredis, url: url)
-                                        end
+          create_redis = lambda do
+            if Object.const_defined?('MiraclePlus::RedisManager')
+              MiraclePlus::RedisManager.instance.get(:cache)
+            else
+              host = ENV['REDIS_HOST']
+              port = ENV['REDIS_PORT']
+              password = ENV['REDIS_PASSWORD']
+              db_index = ENV['REDIS_LOGGING_DB_INDEX'] || MiraclePlus::Logger::RedisDatabaseIndex
+              url = "redis://#{password.present? ? ":#{password}@" : ''}#{host}:#{port}/#{db_index}"
+              ::Redis.new(driver: :hiredis, url: url)
+            end
+          end
+          MiraclePlus::Logger::Redis = create_redis.call
+          MiraclePlus::Logger::SubRedis = create_redis.call
+          MiraclePlus::Logger::RedisDatabaseIndex = MiraclePlus::Logger::Redis.try(:database_index) || 15
         end
       end
       # initializer :cors do

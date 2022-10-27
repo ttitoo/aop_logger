@@ -23,7 +23,7 @@ module MiraclePlus
 
       def self.subscribe_expiration
         Thread.new do
-          Redis.psubscribe("__keyevent@#{MiraclePlus::Logger::RedisDatabaseIndex}__:expired") do |on|
+          SubRedis.psubscribe("__keyevent@#{MiraclePlus::Logger::RedisDatabaseIndex}__:expired") do |on|
             on.pmessage do |_pattern, _channel, key|
               identifier, ip, id = key.split(':')
               identifier == 'expire' &&
