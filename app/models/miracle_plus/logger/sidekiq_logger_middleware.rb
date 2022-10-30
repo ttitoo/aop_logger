@@ -18,7 +18,6 @@ module MiraclePlus
         stop_ts = DateTime.current.to_f
         info(
           'Job success',
-          worker: worker.class.to_s,
           payload: job,
           queue: queue,
           duration: ((stop_ts - start_ts) * 1000).round
@@ -27,7 +26,6 @@ module MiraclePlus
         error(
           'Job failure',
           {
-            worker: worker.class.to_s,
             payload: job,
             queue: queue
           }.merge(exception_to_json(e, false))
