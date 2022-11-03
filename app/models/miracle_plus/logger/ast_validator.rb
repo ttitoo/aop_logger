@@ -43,7 +43,7 @@ module MiraclePlus
 
         payload = AstPayload.new(node.send(:fancy_type), node.children[1])
         if (result = targets.map { |name| send(name, payload) }).any?(&true?)
-          raise(MiraclePlus::Logger::InvalidStatementError, error_message(targets[result.index(&true?)][0..-2]))
+          raise(MiraclePlus::Logger::Errors::InvalidStatementError, error_message(targets[result.index(&true?)][0..-2]))
         end
 
         node.respond_to?(:children) && check_nodes(node.children)

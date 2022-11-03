@@ -28,35 +28,35 @@ RSpec.describe MiraclePlus::Logger::AstValidator, type: :service do
   describe '#illegal_operation?' do
     context 'when code contains shell command' do
       it 'raise InvalidStatementError' do
-        expect { described_class.new('`ls /`').perform }.to raise_error(MiraclePlus::Logger::InvalidStatementError)
+        expect { described_class.new('`ls /`').perform }.to raise_error(MiraclePlus::Logger::Errors::InvalidStatementError)
       end
 
       it 'raise InvalidStatementError' do
-        expect { described_class.new('%x|ls /|').perform }.to raise_error(MiraclePlus::Logger::InvalidStatementError)
+        expect { described_class.new('%x|ls /|').perform }.to raise_error(MiraclePlus::Logger::Errors::InvalidStatementError)
       end
 
       it 'raise InvalidStatementError' do
-        expect { described_class.new("system('ls /')").perform }.to raise_error(MiraclePlus::Logger::InvalidStatementError)
+        expect { described_class.new("system('ls /')").perform }.to raise_error(MiraclePlus::Logger::Errors::InvalidStatementError)
       end
     end
 
     context 'when code contains kernel method' do
       it 'riase InvalidStatementError' do
-        expect { described_class.new('fork { puts 1 }').perform }.to raise_error(MiraclePlus::Logger::InvalidStatementError)
+        expect { described_class.new('fork { puts 1 }').perform }.to raise_error(MiraclePlus::Logger::Errors::InvalidStatementError)
       end
 
       it 'riase InvalidStatementError' do
-        expect { described_class.new('raise 123').perform }.to raise_error(MiraclePlus::Logger::InvalidStatementError)
+        expect { described_class.new('raise 123').perform }.to raise_error(MiraclePlus::Logger::Errors::InvalidStatementError)
       end
     end
 
     context 'when code contains forbidden classes' do
       it 'riase InvalidStatementError' do
-        expect { described_class.new("File.open('./log/test.log')").perform }.to raise_error(MiraclePlus::Logger::InvalidStatementError)
+        expect { described_class.new("File.open('./log/test.log')").perform }.to raise_error(MiraclePlus::Logger::Errors::InvalidStatementError)
       end
 
       it 'riase InvalidStatementError' do
-        expect { described_class.new("Kernel.raise('test')").perform }.to raise_error(MiraclePlus::Logger::InvalidStatementError)
+        expect { described_class.new("Kernel.raise('test')").perform }.to raise_error(MiraclePlus::Logger::Errors::InvalidStatementError)
       end
     end
   end

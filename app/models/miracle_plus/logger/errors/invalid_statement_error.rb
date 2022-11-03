@@ -2,7 +2,9 @@
 
 module MiraclePlus
   module Logger
-    class InvalidStatementError < StandardError
+    module Errors
+      class InvalidStatementError < StandardError
+      end
     end
   end
 end
