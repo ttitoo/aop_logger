@@ -2,7 +2,9 @@
 
 module MiraclePlus
   module Logger
-    class LoggingController < ActionController::Base
+    class LoggingController < BaseController
+      include Concerns::Authentication
+
       protect_from_forgery except: :index
 
       def index; end

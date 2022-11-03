@@ -3,6 +3,8 @@
 module MiraclePlus
   module Logger
     class ApiController < ActionController::API
+      include Concerns::Authentication
+
       def index
         page = (params['page'] || '1').to_i
         per = (params['per'] || '15').to_i
