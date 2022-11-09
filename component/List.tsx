@@ -29,7 +29,7 @@ const ActionsContainer = styled.div`
 `;
 
 const ListEntry = styled.div`
-  display: flex;
+  display: flex!important;
   flex-direction: row;
 `
 
@@ -52,10 +52,10 @@ const toListEntry = (entry: Entry, actions: { [key: string]: (entry: Entry) => v
       {entry.name}
     </Label>
     <Actions>
-      <Action onClick={() => actions['edit'](entry)}>
+      <Action href='#' onClick={() => actions['edit'](entry)}>
         编辑
       </Action>
-      <Action onClick={() => actions['delete'](entry.id)}>
+      <Action href='#' onClick={() => actions['delete'](entry.id)}>
         删除
       </Action>
     </Actions>
