@@ -58,8 +58,8 @@ module MiraclePlus
                 metaclass.send(:alias_method, alias_name, name)
                 metaclass.define_method name do |*args|
                   result = send("#{tracking_alias_method_prefix}#{name}", *args)
-                  io = { args: args, result: result }
                   begin
+                    io = { args: args, result: result }
                     Timeout::timeout(10) do
                       capture_methods[name]
                         .group_by { |e| e['uid'] }
@@ -71,6 +71,7 @@ module MiraclePlus
                   rescue StandardError => e
                     error('Injecting timeout.', error: e.message)
                   end
+                  result
                 end
               end
             end
