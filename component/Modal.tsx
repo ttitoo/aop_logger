@@ -257,11 +257,17 @@ const Modal: FC<ModalProps> = ({ entry, update, close }) => {
     propOr([], "statements")
   );
 
+  const hasNoStatements = compose(
+    equals(0),
+    length,
+    propOr([], 'statements')
+  );
+
   const hasActiveStatement = compose(
-      any(equals(true)),
-      map(prop('active')),
-      propOr([], 'statements')
-    );
+    any(equals(true)),
+    map(prop('active')),
+    propOr([], 'statements')
+  );
 
   const loading = () => (
     <SpinnerContainer className="d-flex justify-content-center align-items-center">
@@ -361,7 +367,7 @@ const Modal: FC<ModalProps> = ({ entry, update, close }) => {
             <button
               type="button"
               className={classNames("btn btn-primary", {
-                disabled: submitting || hasActiveStatement(entity)
+                disabled: submitting || hasNoStatements(entity) || hasActiveStatement(entity)
               })}
               onClick={dispatch}
             >
