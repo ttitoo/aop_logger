@@ -47,10 +47,10 @@ interface ModalProps {
 
 const AddStatementButton = styled.button`
   width: 100%;
-  text-align: center;
-  display: block;
-  padding: 0.5rem 0.75rem;
-  font-size: 32px;
+  text-align: center!important;
+  display: block!important;
+  padding: 0.5rem 0.75rem!important;
+  font-size: 32px!important;
   box-shadow: none !important;
 
   &::after {
