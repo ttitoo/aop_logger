@@ -4,7 +4,7 @@ interface Response {
   error: boolean | String,
 }
 
-const host = 'http://172.21.0.7:4000';
+const host = `${location.protocol}//${location.host}`;
 
 const baseOptions = {
   mode: 'cors',
