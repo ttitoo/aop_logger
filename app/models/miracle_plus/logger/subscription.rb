@@ -26,6 +26,7 @@ module MiraclePlus
         data
           .as_json(only: %i[controller action format method status])
           .merge(
+            ip: RequestStore.store[:request_ip],
             path: data[:path].to_s.split('?').first,
             params: data[:params].as_json(except: %i[authenticity_token controller action format]),
             view: data[:view_runtime]&.round || 0, # will be nil if 30X redirect

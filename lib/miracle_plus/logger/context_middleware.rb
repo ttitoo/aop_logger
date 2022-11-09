@@ -14,6 +14,7 @@ module MiraclePlus
         entries = Entry.list(ip: env['REMOTE_ADDR'])
         ids = uniq_ids.prepend(user_id || 0)
         RequestStore.store = {
+          request_ip: env['REMOTE_ADDR'],
           need_tracking: entries.present?,
           entries: entries,
           logging: MiraclePlus::Logger::Instance.pop(track_id: hashids.encode(*ids), current_user_id: user_id),
