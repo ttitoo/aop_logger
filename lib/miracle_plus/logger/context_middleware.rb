@@ -14,13 +14,13 @@ module MiraclePlus
         ip = request_ip(env)
         entries = Entry.list(ip: ip)
         ids = uniq_ids.prepend(user_id || 0)
-        RequestStore.store = {
+        RequestStore.store.merge!(
           request_ip: ip,
           need_tracking: entries.present?,
           entries: entries,
           logging: MiraclePlus::Logger::Instance.pop(track_id: hashids.encode(*ids), current_user_id: user_id),
           errors: []
-        }
+        )
 
         @app.call(env)
       end
