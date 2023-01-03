@@ -30,6 +30,8 @@ module MiraclePlus
             queue: queue
           }.merge(exception_to_json(e, false))
         )
+        MiraclePlus::Logger::Callbacks.sidekiq.error.is_a?(Proc) &&
+          MiraclePlus::Logger::Callbacks.sidekiq.error.call(e)
       end
     end
   end

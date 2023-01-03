@@ -13,6 +13,10 @@ module MiraclePlus
     class Engine < ::Rails::Engine
       isolate_namespace MiraclePlus::Logger
 
+      MiraclePlus::Logger::Callbacks = OpenStruct.new(
+        sidekiq: OpenStruct.new(error: nil, success: nil)
+      )
+
       rake_env = defined?(Rake) && Rake.try(:application).try(:top_level_tasks).present?
       config.app_middleware.insert_after(Warden::Manager, MiraclePlus::Logger::ContextMiddleware) unless Rails.env.test?
       initializer :initialize_logging_redis do |_app, args|
