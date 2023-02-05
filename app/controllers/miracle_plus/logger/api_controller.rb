@@ -18,14 +18,14 @@ module MiraclePlus
 
       def create
         res = target.persist(params.permit(permitted_attributes))
-        render json: { error: res.in?([true, false]) ? !res : res }
+        render json: { error: bool?(res) ? !res : res }
       end
 
       def update
         id = params.require(:id)
         parameters = params.permit(permitted_attributes)
         res = target(id).persist(parameters)
-        render json: { error: res.in?([true, false]) ? !res : res }
+        render json: { error: bool?(res) ? !res : res }
       end
 
       def destroy
@@ -45,6 +45,10 @@ module MiraclePlus
 
       def target(id = nil)
         @target ||= Entry.new(request_ip, id)
+      end
+
+      def bool?(val)
+        val.is_a?(TrueClass) || val.is_a?(FalseClass)
       end
     end
   end
