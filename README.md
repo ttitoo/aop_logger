@@ -1,28 +1,23 @@
-# MpLogger
-Short description and motivation.
+# mp_logger
+一句话简介：（待填）
 
-## Usage
-How to use my plugin.
+1. 本仓库是胡腾写的。
+2. 这是一个 Ruby 的 Gem。
+3. 2023-3-31 郑诚 补充一些文档。
 
-## Installation
-Add this line to your application's Gemfile:
+## 安装方法
+Gemfile 里添加一行：
 
 ```ruby
 gem 'mp_logger'
 ```
 
-And then execute:
+然后执行
 ```bash
 $ bundle
 ```
 
-Or install it yourself as:
+或者执行：
 ```bash
 $ gem install mp_logger
 ```
-
-## Contributing
-Contribution directions go here.
-
-## License
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
