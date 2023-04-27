@@ -16,6 +16,9 @@ module MiraclePlus
           RequestStore.store[:tracing] = json
         end
         ActiveSupport::Notifications.subscribe('process_action.action_controller') do |event|
+          # 记录内存分配情况。
+          # allocations 是对象分配的数量。
+          # duration 是耗时（毫秒）。
           RequestStore.store[:tracing].merge!(allocations: event.allocations, duration: event.duration.round)
           action = %i[error errors].any? { |key| RequestStore.store[:tracing][key].present? } ? :error : :info
           RequestStore.store[:logging].send(action, :Statistics, RequestStore.store[:tracing])
