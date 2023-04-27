@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# 用途：一个 Entry 代表用户在 /logging 页面点击"添加"按钮后，加上的一组要追踪的代码。
 
 module MiraclePlus
   module Logger

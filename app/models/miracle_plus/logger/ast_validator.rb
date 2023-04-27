@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# 用途：把传进来的代码用 AST(abstract syntax tree) 分析，把危险的操作删除掉。
 
 module MiraclePlus
   module Logger

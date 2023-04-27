@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# 用途: 把 Sidekiq 输出的日志，也改成修改格式后的 JSON。
 
 module MiraclePlus
   module Logger
