@@ -79,6 +79,7 @@ module MiraclePlus
 
       def self.exec(action, args)
         ensure_action_legal(action)
+        # 胡腾：这个好像没用到，因为没有 :create 
         action.to_sym == :create &&
           ensure_statements_valid(JSON.parse(args[:argv].last)['statements'])
 
