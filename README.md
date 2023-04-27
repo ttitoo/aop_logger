@@ -6,6 +6,18 @@
 3. 使用场景：目前(2023-4-26) 只有 [mp 项目](https://github.com/MiraclePlus/mp) 用到了 mp_logger。
 4. 备注：胡腾不爱写注释，目前你读的这个文档是郑诚写的。
 
+## 访问路径
+* localhost:3000/logging
+* apply.miracleplus.com/logging
+* apply-staging.miracleplus.com/logging
+
+## 图片预览
+![](doc/img/1.png)
+
+![](doc/img/2.png)
+
+![](doc/img/3.png)
+
 ## 下面简单介绍一下 Rails Engine 是什么。
 1. Rails Engine 最终也是一个 gem，可用于其他 Rails 项目里，使用方法是在 Gemfile 里写上名字即可（假设发布到了 rubygems.org）
    1. 如果 Engine 还属于本地开发阶段，还没有发布到 rubygems.org，那么使用方法依然也是在 Gemfile 里写上名字，但是要指定本地路径，比如 `gem 'mp_logger', path: '/Users/huteng/Code/mp_logger'`

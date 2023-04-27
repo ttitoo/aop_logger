@@ -1,5 +1,4 @@
 /.bundle/
-/doc/
 /log/*.log
 /pkg/
 /tmp/
@@ -13,3 +12,4 @@ spec/dummy/tmp/
 /dist
 api
 dump.rdb
+.DS_Store
