@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+# 介绍: 中间层的代码。
 require 'socket'
 
 module MiraclePlus

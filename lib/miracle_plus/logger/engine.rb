@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# 用途：
 
 require 'hashids'
 require 'ougai'
@@ -17,8 +18,12 @@ module MiraclePlus
         sidekiq: OpenStruct.new(error: nil, success: nil)
       )
 
+      # 检查是不是 Rake 命令。
       rake_env = defined?(Rake) && Rake.try(:application).try(:top_level_tasks).present?
+      
+      # 插入中间层。
       config.app_middleware.insert_after(Warden::Manager, MiraclePlus::Logger::ContextMiddleware) unless Rails.env.test?
+      
       initializer :initialize_logging_redis do |_app, args|
         MiraclePlus::Logger::Instance = MiraclePlus::Logger::Wrapper.new
 
@@ -40,10 +45,10 @@ module MiraclePlus
           MiraclePlus::Logger::RedisDatabaseIndex = MiraclePlus::Logger::Redis.try(:database_index) || 15
         end
       end
-      # initializer :cors do
-      # end
+
+      # 初始化后
       config.after_initialize do |app|
-        # mount routes
+        # 把路径挂载上去。
         Rails.application.routes.append do
           mount MiraclePlus::Logger::Engine => '/logging'
         end
