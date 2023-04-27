@@ -20,14 +20,13 @@ Gem::Specification.new do |spec|
   spec.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
   spec.add_dependency 'rails', '6.0.3.6'
-  spec.add_dependency 'i18n'
-  spec.add_dependency 'hashids'
+  spec.add_dependency 'i18n' # https://rubygems.org/gems/i18n
+  spec.add_dependency 'hashids' # https://rubygems.org/gems/hashids
   spec.add_dependency 'redis', '~> 4.8'
-  spec.add_dependency 'hiredis', '~> 0.6.3'
-  # for redis 5.x
-  # spec.add_dependency 'hiredis-client'
-  spec.add_dependency 'ougai'
-  spec.add_dependency 'request_store'
+  spec.add_dependency 'hiredis', '~> 0.6.3' # https://rubygems.org/gems/hiredis
+
+  spec.add_dependency 'ougai' # https://rubygems.org/gems/ougai
+  spec.add_dependency 'request_store' # https://github.com/steveklabnik/request_store
   # spec.add_dependency 'enterprise_script_service', '~> 0.2.1'
   spec.add_dependency 'msgpack'
   spec.add_dependency 'parser'
