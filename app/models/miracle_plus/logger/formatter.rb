@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+# 用途：做 JSON 转换的。
+# Ougai 一句话介绍就是处理 JSON 格式的 (https://github.com/tilfin/ougai)
 
 class MiraclePlus::Logger::Formatter < Ougai::Formatters::Base
   include Ougai::Formatters::ForJson
@@ -28,6 +30,7 @@ class MiraclePlus::Logger::Formatter < Ougai::Formatters::Base
     }.merge(data))
   end
 
+  # 日期格式转换。
   def convert_time(data)
     data[:time] = format_datetime(data[:time])
   end
