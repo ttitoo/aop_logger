@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'i18n'
   spec.add_dependency 'hashids'
   spec.add_dependency 'redis', '~> 4.8'
-  spec.add_dependency  'hiredis'
+  spec.add_dependency 'hiredis', '~> 0.6.3'
   # for redis 5.x
   # spec.add_dependency 'hiredis-client'
   spec.add_dependency 'ougai'
