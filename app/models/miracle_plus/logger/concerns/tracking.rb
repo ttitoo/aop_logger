@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+# 用途：把日志输出改成 JSON 格式。
+# 这里用了 Ruby 元编程。
 
 module MiraclePlus
   module Logger

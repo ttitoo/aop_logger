@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-
+# 用途1：ScriptsManager 是管理前端资源文件。
+# 用途2：把 Entry 存到 Redis 里（而不是数据库里）
 # require 'singleton'
 
 module MiraclePlus
@@ -9,6 +10,7 @@ module MiraclePlus
       include Singleton
       include Loggable
 
+      # 只有编辑(update) 和 删除(destroy) Entry 的功能。
       ACTIONS = %i[update destroy].freeze
 
       def self.init_scripts
