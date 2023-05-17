@@ -39,7 +39,13 @@ module MiraclePlus
           Dir.glob("#{folder}/logging-*").each do |file|
             filename = File.basename(file)
             Redis.lpush(key, filename)
-            dst = File.join(Rails.root, 'public', 'assets', filename)
+            # 2023-05-17
+            #  应用在mp项目中，发现默认没有assets目录，会导致程序crash
+            #  增加目录检查
+            dst_dir =  File.join(Rails.root, 'public', 'assets')
+            FileUtils.mkdir_p dst_dir unless File.exists?(dst_dir)
+
+            dst = File.join(dst_dir, filename)
             next if File.exist?(dst)
 
             FileUtils.copy_file(file, dst, true)
@@ -79,7 +85,7 @@ module MiraclePlus
 
       def self.exec(action, args)
         ensure_action_legal(action)
-        # 胡腾：这个好像没用到，因为没有 :create 
+        # 胡腾：这个好像没用到，因为没有 :create
         action.to_sym == :create &&
           ensure_statements_valid(JSON.parse(args[:argv].last)['statements'])
 
