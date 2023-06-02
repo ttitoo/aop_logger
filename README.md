@@ -1,9 +1,12 @@
-# mp_logger
+# aop_logger
+AOP logger is a gem aimed to implement real time log output of functions without adding log code and restarting the cluster.
+AOP is short for Aspect-Oriented Programming, which is from Spring, implemented using runtime proxies. In this gem, we use AOP to inspect function input and ouput, which would be the parameters of a customized snippet, finally to the standard output or log file.
+The purpose is to debug some issues only occur in production. Of cause all dangerous operation are banned, including SQL INSERT/UPDATE/DROP/TRUNCATE and file operations.
 
 ## 简介
-0. mp_logger 是一个 [Rails Engine](https://guides.rubyonrails.org/engines.html)
+0. aop_logger 是一个 [Rails Engine](https://guides.rubyonrails.org/engines.html)
 1. 作者：胡腾。
-3. 使用场景：目前(2023-4-26) 只有 [mp 项目](https://github.com/MiraclePlus/mp) 用到了 mp_logger。
+3. 使用场景：目前(2023-4-26) 只有 [mp 项目](https://github.com/MiraclePlus/mp) 用到了 aop_logger。
 4. 备注：胡腾不爱写注释，目前你读的这个文档是郑诚写的。
 
 ## 访问路径
@@ -20,7 +23,7 @@
 
 ## 下面简单介绍一下 Rails Engine 是什么。
 1. Rails Engine 最终也是一个 gem，可用于其他 Rails 项目里，使用方法是在 Gemfile 里写上名字即可（假设发布到了 rubygems.org）
-   1. 如果 Engine 还属于本地开发阶段，还没有发布到 rubygems.org，那么使用方法依然也是在 Gemfile 里写上名字，但是要指定本地路径，比如 `gem 'mp_logger', path: '/Users/huteng/Code/mp_logger'`
+   1. 如果 Engine 还属于本地开发阶段，还没有发布到 rubygems.org，那么使用方法依然也是在 Gemfile 里写上名字，但是要指定本地路径，比如 `gem 'aop_logger', path: '/Users/huteng/Code/aop_logger'`
 2. 把 Rails Engine 当成一个 Rails App 就行，因为 Engine 也有 Controller, Model, View, Routes, Migration 等等。
 3. 新建 Rails Engine 的方法是运行 `rails plugin new [名字] --mountable`，这会生成一个目录结构。
 5. 以上只是简要概述，具体细节可参阅 [Rails Engine](https://guides.rubyonrails.org/engines.html) 文档，阅读时间大概需要1个小时左右。
@@ -77,7 +80,7 @@
 * 所有这些 controller 和 model 是干什么。
 
 
-mp_logger 
+aop_logger
 https://github.com/lucagrulla/cw
 
 
@@ -85,7 +88,7 @@ https://github.com/lucagrulla/cw
 Gemfile 里添加一行：
 
 ```ruby
-gem 'mp_logger'
+gem 'aop_logger'
 ```
 
 执行
@@ -96,10 +99,10 @@ $ bundle install
 
 
 ## 2023年4月27号下午2点，郑诚和胡腾开会。
-会议目的：聊 mp_logger 是什么。
+会议目的：聊 aop_logger 是什么。
 
 ### 结论
-一句话总结：mp_logger 的用途是做"日志"和"调试"。
+一句话总结：aop_logger 的用途是做"日志"和"调试"。
 
 ### 具体
 目前主要是日志功能在用，调试功能暂时不用。
@@ -113,6 +116,6 @@ $ bundle install
 2. 截图如下：（待补充）
 3. 目前访问 /logging 页面，正常情况是点击"添加"按钮会有效果，但现在完全没反应，这个 bug 我们暂时不去管他了，因为现在没有在用。
 
-### 2. 在 mp 项目里，是如何整合 mp_logger 的。
-1. Gemfile 里写上 gem 'mp_logger'
+### 2. 在 mp 项目里，是如何整合 aop_logger 的。
+1. Gemfile 里写上 gem 'aop_logger'
 
