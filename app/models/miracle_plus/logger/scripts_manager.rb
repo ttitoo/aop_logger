@@ -43,7 +43,7 @@ module MiraclePlus
             #  应用在mp项目中，发现默认没有assets目录，会导致程序crash
             #  增加目录检查
             dst_dir =  File.join(Rails.root, 'public', 'assets')
-            FileUtils.mkdir_p dst_dir unless File.exists?(dst_dir)
+            FileUtils.mkdir_p dst_dir unless File.exist?(dst_dir)
 
             dst = File.join(dst_dir, filename)
             next if File.exist?(dst)

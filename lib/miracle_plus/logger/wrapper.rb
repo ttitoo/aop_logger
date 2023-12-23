@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'socket'
+require_relative './formatter'
 
 module MiraclePlus
   module Logger
@@ -27,7 +28,7 @@ module MiraclePlus
       private
 
       def logger_dst
-        Rails.env.production? ? $stdout : "#{Rails.root}/log/#{ENV.fetch('RAILS_ENV', 'development')}.log"
+        Rails.env.production? ? $stdout : "#{Rails.root}/log/#{Socket.gethostname}.log"
       end
     end
   end

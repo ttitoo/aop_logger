@@ -35,3 +35,4 @@ class MiraclePlus::Logger::Formatter < Ougai::Formatters::Base
     data[:time] = format_datetime(data[:time])
   end
 end
+

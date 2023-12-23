@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  spec.add_dependency 'rails', '6.0.3.6'
+  spec.add_dependency 'rails', '~> 7.0'
   spec.add_dependency 'i18n' # https://rubygems.org/gems/i18n
   spec.add_dependency 'hashids' # https://rubygems.org/gems/hashids
   spec.add_dependency 'redis', '~> 4.8'
